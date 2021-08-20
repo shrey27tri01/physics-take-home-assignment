@@ -1,0 +1,211 @@
+\documentclass{article}
+
+
+
+\usepackage{arxiv}
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{lipsum}		% Can be removed after putting your text content
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{doi}
+\usepackage{mathtools}
+\usepackage{xcolor}
+
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+
+
+\title{Quantum Teleportation and Superconductivity}
+
+\author{
+    {\hspace{0.5mm}Pratik Ahirrao} \\
+	IMT2019064
+	\And
+	{\hspace{0.5mm}Mohith Sathyanarayanan} \\
+	IMT2018043
+	\And
+	{\hspace{0.5mm}Shrey Tripathi} \\
+	IMT2019084
+}
+
+% Uncomment to remove the date
+%\date{}
+
+% Uncomment to override  the `A preprint' in the header
+\renewcommand{\undertitle}{Physics take home assignment}
+
+%%% Add PDF metadata to help others organize their library
+%%% Once the PDF is generated, you can check the metadata with
+%%% $ pdfinfo template.pdf
+\hypersetup{
+pdftitle={Quantum Teleportation and Superconductivity},
+pdfauthor={Pratik Ratnadeep Ahirrao, Mohith Sathyanarayanan, Shrey Tripathi},
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+    A brief introduction to the concepts of Quantum Teleportation and Superconductivity. We discuss the basic concept behind how quantum teleportation works, prerequisites for physical experiments and then discuss the general conditions under which optimal quantum teleportation happens, followed by some real-world applications. We then discuss the basic concepts of Superconductivity and the Bardeen-Cooper-Schrieffer (BCS) theory, followed by a brief introduction to high-temperature superconductivity and recent advances in superconductivity research. Finally, we give some real-life applications and modern advances in this field.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Quantum Teleportation}
+
+\subsection{Introduction}
+Quantum Teleportation is a technique for transferring quantum information from a sender at a particular location to a receiver some distance away. The way to achieve quantum teleportation could be generally explained as measuring an unknown quantum state of the system and then reconstructing it at a remote location . Quantum teleportation provides a complete secure information transmission. It enables the rebuilding of arbitrary unknown quantum states without the transmission of a real particle. The main components needed for teleportation are a sender, the information (say a qubit), a traditional channel, a quantum channel, and a receiver.\cite{qtwiki} 
+
+From the quantum mechanics postulates, when a measurement is made upon a quantum state, any subsequent measurements will collapse: the observed state will be lost. This implies that sender does not need to know the exact contents of the information being sent. \cite{qtwiki}
+
+For actual teleportation, it is required that an entangled quantum state or "Bell State" be created for a qubit to be transferred. The traditional channel is used to transport the result yielded from the Bell measurement. And the quantum protocol is used in unitary transformation to retrieve the original state and information. When the change in measurement between the original qubit and the entangled particle is made, the measurement result must be carried by a traditional channel so that the quantum information can be reconstructed and the receiver can get the original information. Because of this need for the traditional channel, the speed of teleportation can be no faster than the speed of light. \cite{qtapplications}
+
+
+\subsection{Basic Approach}
+Let Alice be a sender and Bob be a receiver. The teleportation protocol begins with a quantum state or qubit $\ket{\psi}$, in Alice's possession, that she wants to convey to Bob. This qubit can be written in bra-ket notation as $\ket{\psi} = \alpha \ket{0} + \beta \ket{1}$. Now protocol requires that Alice and Bob share a maximally entangled state. This state can be any one of the four Bell states:\cite{qtwiki}
+\begin{equation}
+    \ket{\Phi^{+}}_{AB}\ =\ \frac{1}{\sqrt{2}}(\ket{0}_{A} \otimes \ket{0}_{B}\ +\ \ket{1}_{A}\otimes \ket{1}_{B})
+\end{equation}
+\begin{equation}
+    \ket{\Psi^{+}}_{AB}\ =\ \frac{1}{\sqrt{2}}(\ket{0}_{A} \otimes \ket{1}_{B}\ +\ \ket{1}_{A}\otimes \ket{0}_{B})
+\end{equation}
+\begin{equation}
+    \ket{\Psi^{-}}_{AB}\ =\ \frac{1}{\sqrt{2}}(\ket{0}_{A} \otimes \ket{1}_{B}\ -\ \ket{1}_{A}\otimes \ket{0}_{B})
+\end{equation}
+\begin{equation}
+    \ket{\Phi^{-}}_{AB}\ =\ \frac{1}{\sqrt{2}}(\ket{0}_{A} \otimes \ket{0}_{B}\ -\ \ket{1}_{A}\otimes \ket{1}_{B})
+\end{equation}
+
+
+From the given states let's assume that both share the first state from the above equations. Alice gets one of the particles in the pair, with the other going to bob. At this point, Alice has two particles (C, one she wants to send and A, the one of the entangled pair) while Bob has one particle (B). 
+
+The state of the total system (three particles) is given by:\cite{qtwiki}
+\begin{equation}
+    \ket{\psi}_{C} \otimes \ket{\Phi^{+}}_{AB} = (\alpha \ket{0}_{C} + \beta \ket{1}_{C}) \otimes \frac{1}{\sqrt{2}}(\ket{0}_{A} \otimes \ket{0}_{B}\ +\ \ket{1}_{A}\otimes \ket{1}_{B})
+\end{equation}
+
+%\lipsum[4] See Section \ref{sec:headings}.
+After Bob gets the outcome of the Bell measurement from Alice through the traditional protocol, Bob can apply the unitary transformation to the result with his particle B to retrieve the state of particle A and the information contained in particle C.\\
+We can write a python code to demonstrate this approach, as shown \textcolor{blue}{ \href{https://qiskit.org/textbook/ch-algorithms/teleportation.html#2.-The-Quantum-Teleportation-Protocol-}{here}} \cite{telecode}.
+
+\subsection{Experiments}
+Quantum teleportation experiments generally have several prerequisites \cite{teleexp}: 
+\begin{itemize}
+    \item a means of generating an entangled EPR pair of qubits as well as a qubit that is to be teleported. 
+    \item a conventional communication channel capable of transmitting two classical bits. 
+    \item a means of performing a Bell measurement on the EPR pair, and manipulating the quantum state of one of the pairs. 
+\end{itemize}
+
+\begin{enumerate}
+    \item \textbf{Trapped atomic qubits}\\
+    To have considerable quantum information processing, a system with strong ability in storage and logical processing is necessary. Properties like relatively long quantum memory and short interaction distance make trapped atomic qubits suitable to be applied in quantum circuits.\cite{qtapplications}\\
+    \item \textbf{Teleportation between light and matter}\\
+    In this experiment, an entangled pair is generated from the interaction between pulse and coherent atoms.\cite{qtapplications}\\
+    \item \textbf{High dimension teleportation}\\
+    There is one solution that can improve the performance of the communication system and reduce the number of gates in quantum circuits, and that is to improve the dimensions of quantum states. The quantum technologies could be extended to a higher dimension such that the efficiency of simulation and computation will be improved. The high-dimensional quantum states would also mean large information contained in a single-particle implying more capacity and noise resilience of the quantum communication system.\cite{qtapplications} 
+\end{enumerate}
+
+
+\subsection{Conditions}
+For optimal quantum teleportation, there are many conditions that should be satisfied. \cite{qtapplications}
+
+\begin{itemize}
+    \item There is no limitation for the input information. The input information and output can be supplied and verified by the third party except for the sender and receiver.
+    \item A complete Bell measurement is achieved. Conditional unitary transmission could be performed before the verification from the third party.
+    \item The fidelity of teleportation should be higher than the appropriate threshold of the classical protocol. 
+\end{itemize}
+
+In many cases, the condition (2) is generally not satisfied. 
+
+\subsection{Applications in real world}
+\begin{itemize}
+    \item Quantum teleportation can be achieved in relatively long-range communication using the existing fiber network.\cite{qtapplications}
+    \item Quantum teleportation is a basis of Quantum Computing Systems which helps in business and science applications. \cite{qtapplications}
+    \item Quantum Teleportation is very important for quantum cryptography \cite{qtapplications}. 
+\end{itemize}
+ 
+\subsection{Teleportation on a Real Quantum Computer}
+We cannot perform quantum teleportation on IBM quantum computers in its current form on real hardware. So, we can move all the measurements to the end, and we should see the same results. The early measurement in quantum teleportation would have allowed us to transmit a qubit state without a direct quantum communication channel \cite{telecode}.
+
+\section{Superconductivity}
+
+\subsection{Introduction}
+Certain materials, below a certain temperature exhibit zero resistance to electric current, this phenomenon is referred to as Superconductivity and this temperature is known as critical temperature ($T_{c}$). Superconductivity was first discovered by Dutch physicist Heike Kamerlingh Onnes in 1911 for which he was awarded the Nobel prize in physics (1913) \cite{superwiki}.
+
+At normal room temperatures any material has a resistance to the flow of electricity. This arises due to the collision of free electrons with the atoms in the lattice of the conductor. But current in a super-conducting material persists for an indefinite amount of time, i.e., no energy is lost in transmission of electricity.  
+
+So far the highest temperature at which superconductivity has been achieved is at extremely high pressure and 15$^{\circ}$ Celsius. No practical way of achieving super-conductivity at room temperature has been found. Although we have made a lot of progress in understanding super conductivity, there is still a lot left to understand if we are to achieve it at room temperature.  
+
+
+
+
+
+\subsection{Bardeen-Cooper-Schrieffer (BCS) Theory}
+
+To understand BCS theory, we first need to understand what Cooper Pairs are? and how they are formed? Cooper pairs are formed due to the mutual attraction between a positively charged atom in the lattice and a negatively charged moving electron, which causes an increase in positive charge density in a region which further attracts another electron. The 2 electrons are now said to be a Cooper Pair, and behave like a boson instead of a fermion. \cite{hightempsuper}
+
+Under normal temperatures the cooper pairs are too weak to be of any significance, but at extremely low temperatures when atomic vibrations are exceedingly small, these cooper pair interactions become significant, resulting in the formation of an extremely enormous number of such cooper pairs which move as a whole, i.e., as a “condensate", and as a result all the electrons now move through the conductor without any significant resistance. 
+
+The BCS theory has correctly explained various experiments like Meissner effect, which happens when a magnet placed above a super conductor levitates to allow the magnetic field lines to reach the opposite pole, since magnetic field lines cannot pass through a super conductor. 
+
+
+\subsection{High temperature Superconductivity}
+High-temperature superconductors are defined as materials that behave as superconductors at temperatures above 77 K. The majority of high-temperature superconductors are ceramic materials. 
+
+The true potential of superconductivity can only be reached when we find a commercially viable way of achieving it at room temperature. 
+
+High-temperature superconductivity, the ability of certain materials to conduct electricity with zero electrical resistance at temperatures above the boiling point of liquid nitrogen, was unexpectedly discovered in copper oxide (cuprate) materials in 1987. High-temperature superconductivity could revolutionize technologies ranging from magnetically-levitated trains to electrical power transmission \cite{hightempsuper} \cite{twentyfiveyears}
+\cite{paramagnetism}. 
+
+
+\subsection{Recent advances in Superconductivity research}
+Superconducting materials find applications in a rapidly growing number of technological areas, and with the steady increase in complexity of candidate materials, conventional experimental methods face a huge challenge in their search for novel materials. However, high throughput methods and new research paradigms have demonstrated their utility in accelerating research for rapid screening and optimization of materials. \cite{recentadvancessuper}
+
+After the BCS theory was developed in 1957, establishing the physical parameters behind the critical temperature became one of the main research topics in the field. A major breakthrough occurred in this area in 1986 when the ceramic compound Ba-La-Cu-O was found to become superconducting at 35K by Bednorz and Muller in Zurich. Soon the limit of 40K was crossed and the highest $T_{c}$ reached 138K in Hg$_{0.8}$Tl$_{0.2}$Ba$_{2}$Ca$_{2}$Cu$_{3}$O$_{8.33}$. With more research, the superconducting materials become more complex and containing more elements. For example, YBa$_{2}$Cu$_{3}$O$_{6+\delta}$, HgBa$_{2}$Ca$_{2}$Cu$_{3}$O$_{8+\delta}$ and Hg$_{0.8}$Tl$_{0.2}$Ba$_{2}$Ca$_{2}$Cu$_{3}$O$_{8.33}$ \cite{recentadvancessuper}.\\
+In general, there are two main challenges in the experimental study of superconductivity: 
+\begin{itemize}
+    \item searching for novel superconductors in the enormous space of candidate compounds comprised of more and more elements, and
+    \item delineating the key physical parameters that control the superconductivity, by means of establishing a reliable multidimensional phase diagram.
+\end{itemize}
+Conventional experimental methods are not well suited to address these problems. 
+
+\subsubsection{High throughput synthesis for superconductors}
+In high-throughput synthesis of superconductors, efficiency is a key point – the speed of synthesis should grow fas er than the resources it demands. To achieve this, common components and procedures used in different experimental steps, like evacuation, heating and conditioning atmosphere, should be combined as much as possible. This is the basis of the so-called combinatorial approach, which is the most efficient high-throughput synthesis method.
+
+\subsubsection{Machine Learning for new superconductors}
+Machine learning and statistical methods can use the information gathered in large data sets through high throughput experiments to predict macroscopic variables, thus providing a workaround for using theoretical models and complicated tools.
+
+
+\subsection{Applications}
+Some of the technological applications of superconductivity include \cite{superappwiki}:
+\begin{itemize}
+    \item The production of sensitive magnetometers based on SQUIDS (Superconducting Quantum Interference Devices)
+    \item Fast digital circuits 
+    \item Powerful superconducting electromagnets used in trains, Magnetic Resonance Imaging (MRI) and Nuclear Magnetic Resonance (NMR) machines, magnetic confinement fusion reactors and the beam-steering and focusing magnets used in particle accelerators. 
+    \item Low-loss power cables 
+    \item RF and microwave filters (e.g., for mobile phone base stations, as well as military ultra-sensitive/selective receivers) 
+    \item Fast fault current limiters.
+    \item Particle accelerators such as the Large Hadron Collider includes many high field electromagnets requiring large quantities of Low temperature super conductors (LTS). 
+\end{itemize}
+
+
+
+
+
+
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+
+\end{document}
